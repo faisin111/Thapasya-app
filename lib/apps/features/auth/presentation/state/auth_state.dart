@@ -17,12 +17,13 @@ class AuthState {
     bool? loading,
     bool? success,
     String? error,
+    bool clearError = false,
     Role? role,
   }) {
     return AuthState(
       loading: loading ?? this.loading,
       success: success ?? this.success,
-      error: error ?? this.error,
+      error: clearError ? null : (error ?? this.error),
       role: role ?? this.role,
     );
   }

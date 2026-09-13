@@ -24,10 +24,10 @@ class LoginView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AuthState>(authProvider, (pre, next) async {
       if (next.loading) return;
-      if (next.error != null) {
-        AppFlushbar.error(context, title: AuthConstants.loginFailedTitle, message: "${next.error}");
+      if (next.error != null && next.error != pre?.error) {
+        AppFlushbar.error(context, title: AuthConstants.loginFailedTitle, message: next.error!);
       }
-      if (next.success) {
+      if (next.success && (pre == null || !pre.success)) {
         AppFlushbar.success(
           context,
           title: AuthConstants.loginSuccessTitle,
@@ -170,6 +170,18 @@ class LoginView extends ConsumerWidget {
                               isPassword: true,
                             ),
                             SizedBox(height: 15),
+                            if (state.error != null) ...[
+                              Text(
+                                state.error!,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.inter(
+                                  fontSize: 13.sp,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                            ],
                             AnimatedOpacity(
                               opacity: state.loading ? .5 : 1,
                               duration: Duration(milliseconds: 200),

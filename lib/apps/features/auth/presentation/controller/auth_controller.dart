@@ -8,7 +8,7 @@ class AuthController extends StateNotifier<AuthState> {
   final AuthLoginUseCase loginCase;
   AuthController(this.loginCase) : super(AuthState());
   Future<void> login(String username, String password) async {
-    state = state.copyWithin(loading: true, success: false);
+    state = state.copyWithin(loading: true, success: false, clearError: true);
     try {
       final data = await loginCase.call(
         UserModel(username: username, password: password),
