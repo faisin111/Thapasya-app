@@ -31,7 +31,7 @@ class _AlertsViewState extends ConsumerState<AlertsView> {
   @override
   Widget build(BuildContext context) {
     final alerts = ref.watch(alertsProvider);
-    print("${alerts.error}");
+    debugPrint("${alerts.error}");
     return ListView(
       physics: BouncingScrollPhysics(),
       children: [

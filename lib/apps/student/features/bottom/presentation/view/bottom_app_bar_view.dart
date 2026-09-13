@@ -13,6 +13,8 @@ import 'package:thapasya/apps/student/features/home/presentation/view/home_view.
 import 'package:thapasya/core/routes/app_routes.dart';
 import 'package:thapasya/core/theme/app_theme.dart';
 
+import 'package:thapasya/core/constants/dashboard_constants.dart';
+
 class BottomAppBarView extends StatefulWidget {
   const BottomAppBarView({super.key});
 
@@ -27,7 +29,7 @@ class _BottomAppBarViewState extends State<BottomAppBarView> {
   @override
   void initState() {
     super.initState();
-    print("bottom is opened");
+    debugPrint("bottom is opened");
   }
 
   @override
@@ -40,7 +42,7 @@ class _BottomAppBarViewState extends State<BottomAppBarView> {
         ),
         leadingWidth: 40,
         title: Text(
-          "Thapasya",
+          DashboardConstants.appTitle,
           style: GoogleFonts.inter(
             fontSize: 22.sp,
             color: AppTheme.whiteColor,
@@ -72,28 +74,28 @@ class _BottomAppBarViewState extends State<BottomAppBarView> {
         items: [
           BottomNavigationBarItem(
             icon: HugeIcon(icon: HugeIcons.strokeRoundedHome09, strokeWidth: 2),
-            label: "Home",
+            label: DashboardConstants.navHome,
           ),
           BottomNavigationBarItem(
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedCalendar03,
               strokeWidth: 2,
             ),
-            label: "Attend",
+            label: DashboardConstants.navAttend,
           ),
           BottomNavigationBarItem(
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedNotification01,
               strokeWidth: 2,
             ),
-            label: "Alerts",
+            label: DashboardConstants.navAlerts,
           ),
           BottomNavigationBarItem(
             icon: HugeIcon(
               icon: HugeIcons.strokeRoundedCreditCard,
               strokeWidth: 2,
             ),
-            label: "Fees",
+            label: DashboardConstants.navFees,
           ),
         ],
       ),

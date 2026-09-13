@@ -12,7 +12,7 @@ class AuthRemoteDs {
   AuthRemoteDs(this.client);
 
   Future<String> loginPost(UserModel model) async {
-    debugPrint("${model}...${model.password}");
+    debugPrint("$model...${model.password}");
     try {
       final response = await client.dio.post(
         ApiEndpoints.login,

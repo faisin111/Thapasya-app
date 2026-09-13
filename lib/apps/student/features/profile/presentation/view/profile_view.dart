@@ -11,6 +11,8 @@ import 'package:thapasya/core/routes/app_routes.dart';
 import 'package:thapasya/core/theme/app_theme.dart';
 import 'package:thapasya/core/utils/app_snacbar.dart';
 
+import 'package:thapasya/core/constants/profile_constants.dart';
+
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
 
@@ -20,13 +22,13 @@ class ProfileView extends ConsumerWidget {
     ref.listen(profileProvider, (prev, next) async {
       if (next.loading) return;
       if (next.error != null) {
-        AppFlushbar.error(context, title: "Failed", message: "${next.error}");
+        AppFlushbar.error(context, title: ProfileConstants.logoutFailedTitle, message: "${next.error}");
       }
       if (next.success) {
         AppFlushbar.success(
           context,
-          title: "Success",
-          message: "Logout Success",
+          title: ProfileConstants.logoutSuccessTitle,
+          message: ProfileConstants.logoutSuccessMessage,
         );
         await Future.delayed(Duration(seconds: 2));
         if (!context.mounted) return;
@@ -47,7 +49,7 @@ class ProfileView extends ConsumerWidget {
         ],
         centerTitle: true,
         title: Text(
-          "Profile",
+          ProfileConstants.profileTitle,
           style: GoogleFonts.inter(
             fontSize: 22.sp,
             color: AppTheme.whiteColor,
@@ -95,7 +97,7 @@ class ProfileView extends ConsumerWidget {
                   ),
                   SizedBox(height: 15.h),
                   Text(
-                    "Student & Staff Portal",
+                    ProfileConstants.portalSubtitle,
                     style: GoogleFonts.inter(
                       fontSize: 13.sp,
                       color: AppTheme.whiteColor,
@@ -112,7 +114,7 @@ class ProfileView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Personal Information",
+                    ProfileConstants.personalInfoTitle,
                     style: GoogleFonts.inter(
                       fontSize: 17.sp,
                       color: const Color.fromARGB(255, 0, 0, 0),
@@ -120,14 +122,14 @@ class ProfileView extends ConsumerWidget {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  detailsItem("Name", data.name),
-                  detailsItem("Date of Birth", "unknown"),
-                  detailsItem("Phone", data.phone),
-                  detailsItem("E-Mail", data.email),
+                  detailsItem(ProfileConstants.nameLabel, data.name),
+                  detailsItem(ProfileConstants.dobLabel, ProfileConstants.dobUnknown),
+                  detailsItem(ProfileConstants.phoneLabel, data.phone),
+                  detailsItem(ProfileConstants.emailLabel, data.email),
                   Row(
                     children: [
                       Text(
-                        "Address",
+                        ProfileConstants.addressLabel,
                         style: GoogleFonts.inter(
                           fontSize: 13.sp,
                           color: const Color.fromARGB(255, 142, 142, 142),
@@ -158,7 +160,7 @@ class ProfileView extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Parent / Guardian Details",
+                    ProfileConstants.parentDetailsTitle,
                     style: GoogleFonts.inter(
                       fontSize: 17.sp,
                       color: const Color.fromARGB(255, 0, 0, 0),
@@ -166,13 +168,13 @@ class ProfileView extends ConsumerWidget {
                     ),
                   ),
                   SizedBox(height: 20.h),
-                  detailsItem("Name", data.parent.name),
+                  detailsItem(ProfileConstants.nameLabel, data.parent.name),
 
-                  detailsItem("E-Mail", data.parent.email),
+                  detailsItem(ProfileConstants.emailLabel, data.parent.email),
                   Row(
                     children: [
                       Text(
-                        "Phone",
+                        ProfileConstants.phoneLabel,
                         style: GoogleFonts.inter(
                           fontSize: 13.sp,
                           color: const Color.fromARGB(255, 142, 142, 142),
@@ -212,7 +214,7 @@ class ProfileView extends ConsumerWidget {
                     },
                     icon: Icon(Icons.logout_outlined),
                     label: Text(
-                      p.loading ? "Processing...." : "Logout",
+                      p.loading ? ProfileConstants.logoutProcessing : ProfileConstants.logoutButton,
                       style: GoogleFonts.poppins(
                         color: AppTheme.whiteColor,
                         fontSize: 16.sp,

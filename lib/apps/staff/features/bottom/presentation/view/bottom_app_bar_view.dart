@@ -17,6 +17,8 @@ import 'package:thapasya/apps/student/features/home/presentation/view/home_view.
 import 'package:thapasya/core/routes/app_routes.dart';
 import 'package:thapasya/core/theme/app_theme.dart';
 
+import 'package:thapasya/core/constants/staff_dashboard_constants.dart';
+
 class BottomBarStaffView extends StatefulWidget {
   const BottomBarStaffView({super.key});
 
@@ -36,7 +38,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
   @override
   void initState() {
     super.initState();
-    print("bottom is opened");
+    debugPrint("bottom is opened");
   }
 
   @override
@@ -49,7 +51,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
         ),
         leadingWidth: 40,
         title: Text(
-          "Thapasya Staff",
+          StaffDashboardConstants.appTitle,
           style: GoogleFonts.inter(
             fontSize: 22.sp,
             color: AppTheme.whiteColor,
@@ -81,7 +83,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
         items: [
           BottomNavigationBarItem(
             icon: HugeIcon(icon: HugeIcons.strokeRoundedHome09, strokeWidth: 2),
-            label: "Home",
+            label: StaffDashboardConstants.navHome,
           ),
 
           BottomNavigationBarItem(
@@ -89,7 +91,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
               icon: HugeIcons.strokeRoundedUserMultiple,
               strokeWidth: 2,
             ),
-            label: "Students",
+            label: StaffDashboardConstants.navStudents,
           ),
 
           BottomNavigationBarItem(
@@ -97,7 +99,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
               icon: HugeIcons.strokeRoundedTaskDone01,
               strokeWidth: 2,
             ),
-            label: "Attendance",
+            label: StaffDashboardConstants.navAttendance,
           ),
 
           BottomNavigationBarItem(
@@ -105,7 +107,7 @@ class _BottomBarStaffViewState extends State<BottomBarStaffView> {
               icon: HugeIcons.strokeRoundedDocumentValidation,
               strokeWidth: 2,
             ),
-            label: "Logs",
+            label: StaffDashboardConstants.navLogs,
           ),
         ],
       ),

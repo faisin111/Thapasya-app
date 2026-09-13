@@ -11,6 +11,10 @@ import 'package:thapasya/apps/student/features/global/presentation/providers/glo
 import 'package:thapasya/core/routes/app_routes.dart';
 import 'package:thapasya/core/theme/app_theme.dart';
 
+import 'package:thapasya/apps/features/landing/presentation/provider/landing_provider.dart';
+
+import 'package:thapasya/core/constants/landing_constants.dart';
+
 class SplashView extends ConsumerStatefulWidget {
   const SplashView({super.key});
 
@@ -31,7 +35,20 @@ class _SplashViewState extends ConsumerState<SplashView> {
 
       if (!mounted) return;
 
-      context.go(AppRoutes.authbridge);
+      final authData = await ref.read(checkAuthProvider.future);
+      if (!mounted) return;
+
+      if (authData["logging"] == true) {
+        if (authData["role"] == "student") {
+          context.go(AppRoutes.bottom);
+        } else if (authData["role"] == "staff" || authData["role"] == "teacher") {
+          context.go(AppRoutes.staffBottom);
+        } else {
+          context.go(AppRoutes.login);
+        }
+      } else {
+        context.go(AppRoutes.login);
+      }
     });
   }
 
@@ -46,7 +63,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
             SvgPicture.asset("assets/svg/app_icon.svg", height: 100),
 
             Text(
-              "Thapasya",
+              LandingConstants.appName,
               style: GoogleFonts.inter(
                 fontSize: 26.sp,
                 color: AppTheme.whiteColor,
@@ -55,7 +72,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
             ),
             SizedBox(height: 10.h),
             Text(
-              "Dance Academy",
+              LandingConstants.appSubtitle,
               style: GoogleFonts.inter(
                 fontSize: 12.sp,
                 color: AppTheme.whiteColor,

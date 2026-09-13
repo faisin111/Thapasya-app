@@ -12,11 +12,12 @@ import 'package:thapasya/apps/student/features/global/presentation/providers/glo
 import 'package:thapasya/core/routes/app_routes.dart';
 import 'package:thapasya/core/theme/app_theme.dart';
 import 'package:thapasya/core/utils/app_snacbar.dart';
+import 'package:thapasya/core/constants/auth_constants.dart';
 
 class LoginView extends ConsumerWidget {
   LoginView({super.key});
 
-  GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final username = TextEditingController();
   final password = TextEditingController();
   @override
@@ -24,18 +25,22 @@ class LoginView extends ConsumerWidget {
     ref.listen<AuthState>(authProvider, (pre, next) async {
       if (next.loading) return;
       if (next.error != null) {
-        AppFlushbar.error(context, title: "Failed", message: "${next.error}");
+        AppFlushbar.error(context, title: AuthConstants.loginFailedTitle, message: "${next.error}");
       }
       if (next.success) {
         AppFlushbar.success(
           context,
-          title: "Success",
-          message: "Login Success",
+          title: AuthConstants.loginSuccessTitle,
+          message: AuthConstants.loginSuccessMessage,
         );
         await ref.read(globalProvider.notifier).getCources();
         await Future.delayed(Duration(seconds: 2));
         if (!context.mounted) return;
-        context.go(AppRoutes.bottom);
+        if (next.role == Role.teacher) {
+          context.go(AppRoutes.staffBottom);
+        } else {
+          context.go(AppRoutes.bottom);
+        }
       }
     });
     final state = ref.watch(authProvider);
@@ -59,7 +64,7 @@ class LoginView extends ConsumerWidget {
                         size: 20.sp,
                       ),
                       Text(
-                        "Back to Home",
+                        AuthConstants.backToHome,
                         style: GoogleFonts.inter(
                           fontSize: 15.sp,
                           color: AppTheme.whiteColor,
@@ -77,7 +82,7 @@ class LoginView extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(.25),
+                        color: Colors.black.withValues(alpha: .25),
                         blurRadius: 20,
                         offset: Offset(0, 8),
                       ),
@@ -106,7 +111,7 @@ class LoginView extends ConsumerWidget {
                             ),
                             SizedBox(height: 16.h),
                             Text(
-                              "Thapasya",
+                              AuthConstants.appName,
                               style: GoogleFonts.inter(
                                 fontSize: 27.sp,
                                 color: AppTheme.whiteColor,
@@ -115,7 +120,7 @@ class LoginView extends ConsumerWidget {
                             ),
                             SizedBox(height: 5.h),
                             Text(
-                              "Student & Staff Portal",
+                              AuthConstants.appSubtitle,
                               style: GoogleFonts.inter(
                                 fontSize: 13.sp,
                                 color: AppTheme.whiteColor,
@@ -142,7 +147,7 @@ class LoginView extends ConsumerWidget {
                           children: [
                             SizedBox(height: 20),
                             Text(
-                              "Welcome Back",
+                              AuthConstants.welcomeBack,
                               style: GoogleFonts.inter(
                                 fontSize: 25.sp,
                                 color: const Color.fromARGB(255, 0, 0, 0),
@@ -152,15 +157,15 @@ class LoginView extends ConsumerWidget {
                             SizedBox(height: 15),
                             TextFieldAuth(
                               controller: username,
-                              label: "User Name",
-                              hint: "eg: thapasya123",
+                              label: AuthConstants.userNameLabel,
+                              hint: AuthConstants.userNameHint,
                               suffix: Icons.person_outlined,
                             ),
                             SizedBox(height: 10),
                             TextFieldAuth(
                               controller: password,
-                              label: "Password",
-                              hint: "enter your password",
+                              label: AuthConstants.passwordLabel,
+                              hint: AuthConstants.passwordHint,
                               suffix: Icons.lock_outlined,
                               isPassword: true,
                             ),
@@ -179,7 +184,7 @@ class LoginView extends ConsumerWidget {
                                     }
                                   },
                                   child: Text(
-                                    state.loading ? "Signing..." : "Login",
+                                    state.loading ? AuthConstants.signingButton : AuthConstants.loginButton,
                                     style: GoogleFonts.poppins(
                                       color: AppTheme.whiteColor,
                                       fontSize: 16.sp,
@@ -191,7 +196,7 @@ class LoginView extends ConsumerWidget {
                             ),
                             SizedBox(height: 15),
                             Text(
-                              "Credential are provided by the academy administration",
+                              AuthConstants.credentialDisclaimer,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.inter(
                                 fontSize: 13.sp,
@@ -209,7 +214,7 @@ class LoginView extends ConsumerWidget {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  "Need Help? Contact: +918891912383",
+                  AuthConstants.needHelpContact,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 13.sp,
